@@ -10,4 +10,5 @@ type Meme {
 	id: ID! @id
 	name: String!
 	link: String!
+	tags: String!
 }

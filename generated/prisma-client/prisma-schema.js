@@ -21,6 +21,7 @@ type Meme {
   id: ID!
   name: String!
   link: String!
+  tags: String!
 }
 
 type MemeConnection {
@@ -33,6 +34,7 @@ input MemeCreateInput {
   id: ID
   name: String!
   link: String!
+  tags: String!
 }
 
 input MemeCreateManyInput {
@@ -52,12 +54,15 @@ enum MemeOrderByInput {
   name_DESC
   link_ASC
   link_DESC
+  tags_ASC
+  tags_DESC
 }
 
 type MemePreviousValues {
   id: ID!
   name: String!
   link: String!
+  tags: String!
 }
 
 input MemeScalarWhereInput {
@@ -103,6 +108,20 @@ input MemeScalarWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
+  tags: String
+  tags_not: String
+  tags_in: [String!]
+  tags_not_in: [String!]
+  tags_lt: String
+  tags_lte: String
+  tags_gt: String
+  tags_gte: String
+  tags_contains: String
+  tags_not_contains: String
+  tags_starts_with: String
+  tags_not_starts_with: String
+  tags_ends_with: String
+  tags_not_ends_with: String
   AND: [MemeScalarWhereInput!]
   OR: [MemeScalarWhereInput!]
   NOT: [MemeScalarWhereInput!]
@@ -129,16 +148,19 @@ input MemeSubscriptionWhereInput {
 input MemeUpdateDataInput {
   name: String
   link: String
+  tags: String
 }
 
 input MemeUpdateInput {
   name: String
   link: String
+  tags: String
 }
 
 input MemeUpdateManyDataInput {
   name: String
   link: String
+  tags: String
 }
 
 input MemeUpdateManyInput {
@@ -156,6 +178,7 @@ input MemeUpdateManyInput {
 input MemeUpdateManyMutationInput {
   name: String
   link: String
+  tags: String
 }
 
 input MemeUpdateManyWithWhereNestedInput {
@@ -217,6 +240,20 @@ input MemeWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
+  tags: String
+  tags_not: String
+  tags_in: [String!]
+  tags_not_in: [String!]
+  tags_lt: String
+  tags_lte: String
+  tags_gt: String
+  tags_gte: String
+  tags_contains: String
+  tags_not_contains: String
+  tags_starts_with: String
+  tags_not_starts_with: String
+  tags_ends_with: String
+  tags_not_ends_with: String
   AND: [MemeWhereInput!]
   OR: [MemeWhereInput!]
   NOT: [MemeWhereInput!]

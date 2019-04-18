@@ -144,7 +144,9 @@ export type MemeOrderByInput =
   | "name_ASC"
   | "name_DESC"
   | "link_ASC"
-  | "link_DESC";
+  | "link_DESC"
+  | "tags_ASC"
+  | "tags_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -205,6 +207,20 @@ export interface MemeWhereInput {
   link_not_starts_with?: String;
   link_ends_with?: String;
   link_not_ends_with?: String;
+  tags?: String;
+  tags_not?: String;
+  tags_in?: String[] | String;
+  tags_not_in?: String[] | String;
+  tags_lt?: String;
+  tags_lte?: String;
+  tags_gt?: String;
+  tags_gte?: String;
+  tags_contains?: String;
+  tags_not_contains?: String;
+  tags_starts_with?: String;
+  tags_not_starts_with?: String;
+  tags_ends_with?: String;
+  tags_not_ends_with?: String;
   AND?: MemeWhereInput[] | MemeWhereInput;
   OR?: MemeWhereInput[] | MemeWhereInput;
   NOT?: MemeWhereInput[] | MemeWhereInput;
@@ -284,16 +300,19 @@ export interface MemeCreateInput {
   id?: ID_Input;
   name: String;
   link: String;
+  tags: String;
 }
 
 export interface MemeUpdateInput {
   name?: String;
   link?: String;
+  tags?: String;
 }
 
 export interface MemeUpdateManyMutationInput {
   name?: String;
   link?: String;
+  tags?: String;
 }
 
 export interface UserCreateInput {
@@ -342,6 +361,7 @@ export interface MemeUpdateWithWhereUniqueNestedInput {
 export interface MemeUpdateDataInput {
   name?: String;
   link?: String;
+  tags?: String;
 }
 
 export interface MemeUpsertWithWhereUniqueNestedInput {
@@ -393,6 +413,20 @@ export interface MemeScalarWhereInput {
   link_not_starts_with?: String;
   link_ends_with?: String;
   link_not_ends_with?: String;
+  tags?: String;
+  tags_not?: String;
+  tags_in?: String[] | String;
+  tags_not_in?: String[] | String;
+  tags_lt?: String;
+  tags_lte?: String;
+  tags_gt?: String;
+  tags_gte?: String;
+  tags_contains?: String;
+  tags_not_contains?: String;
+  tags_starts_with?: String;
+  tags_not_starts_with?: String;
+  tags_ends_with?: String;
+  tags_not_ends_with?: String;
   AND?: MemeScalarWhereInput[] | MemeScalarWhereInput;
   OR?: MemeScalarWhereInput[] | MemeScalarWhereInput;
   NOT?: MemeScalarWhereInput[] | MemeScalarWhereInput;
@@ -406,6 +440,7 @@ export interface MemeUpdateManyWithWhereNestedInput {
 export interface MemeUpdateManyDataInput {
   name?: String;
   link?: String;
+  tags?: String;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -444,12 +479,14 @@ export interface Meme {
   id: ID_Output;
   name: String;
   link: String;
+  tags: String;
 }
 
 export interface MemePromise extends Promise<Meme>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   link: () => Promise<String>;
+  tags: () => Promise<String>;
 }
 
 export interface MemeSubscription
@@ -458,6 +495,7 @@ export interface MemeSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   link: () => Promise<AsyncIterator<String>>;
+  tags: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MemeConnection {
@@ -677,6 +715,7 @@ export interface MemePreviousValues {
   id: ID_Output;
   name: String;
   link: String;
+  tags: String;
 }
 
 export interface MemePreviousValuesPromise
@@ -685,6 +724,7 @@ export interface MemePreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   link: () => Promise<String>;
+  tags: () => Promise<String>;
 }
 
 export interface MemePreviousValuesSubscription
@@ -693,6 +733,7 @@ export interface MemePreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   link: () => Promise<AsyncIterator<String>>;
+  tags: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
