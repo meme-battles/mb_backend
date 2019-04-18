@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateMeme {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -13,7 +17,259 @@ type BatchPayload {
 
 scalar Long
 
+type Meme {
+  id: ID!
+  name: String!
+  link: String!
+  tags: String!
+}
+
+type MemeConnection {
+  pageInfo: PageInfo!
+  edges: [MemeEdge]!
+  aggregate: AggregateMeme!
+}
+
+input MemeCreateInput {
+  id: ID
+  name: String!
+  link: String!
+  tags: String!
+}
+
+input MemeCreateManyInput {
+  create: [MemeCreateInput!]
+  connect: [MemeWhereUniqueInput!]
+}
+
+type MemeEdge {
+  node: Meme!
+  cursor: String!
+}
+
+enum MemeOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  link_ASC
+  link_DESC
+  tags_ASC
+  tags_DESC
+}
+
+type MemePreviousValues {
+  id: ID!
+  name: String!
+  link: String!
+  tags: String!
+}
+
+input MemeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  tags: String
+  tags_not: String
+  tags_in: [String!]
+  tags_not_in: [String!]
+  tags_lt: String
+  tags_lte: String
+  tags_gt: String
+  tags_gte: String
+  tags_contains: String
+  tags_not_contains: String
+  tags_starts_with: String
+  tags_not_starts_with: String
+  tags_ends_with: String
+  tags_not_ends_with: String
+  AND: [MemeScalarWhereInput!]
+  OR: [MemeScalarWhereInput!]
+  NOT: [MemeScalarWhereInput!]
+}
+
+type MemeSubscriptionPayload {
+  mutation: MutationType!
+  node: Meme
+  updatedFields: [String!]
+  previousValues: MemePreviousValues
+}
+
+input MemeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MemeWhereInput
+  AND: [MemeSubscriptionWhereInput!]
+  OR: [MemeSubscriptionWhereInput!]
+  NOT: [MemeSubscriptionWhereInput!]
+}
+
+input MemeUpdateDataInput {
+  name: String
+  link: String
+  tags: String
+}
+
+input MemeUpdateInput {
+  name: String
+  link: String
+  tags: String
+}
+
+input MemeUpdateManyDataInput {
+  name: String
+  link: String
+  tags: String
+}
+
+input MemeUpdateManyInput {
+  create: [MemeCreateInput!]
+  update: [MemeUpdateWithWhereUniqueNestedInput!]
+  upsert: [MemeUpsertWithWhereUniqueNestedInput!]
+  delete: [MemeWhereUniqueInput!]
+  connect: [MemeWhereUniqueInput!]
+  set: [MemeWhereUniqueInput!]
+  disconnect: [MemeWhereUniqueInput!]
+  deleteMany: [MemeScalarWhereInput!]
+  updateMany: [MemeUpdateManyWithWhereNestedInput!]
+}
+
+input MemeUpdateManyMutationInput {
+  name: String
+  link: String
+  tags: String
+}
+
+input MemeUpdateManyWithWhereNestedInput {
+  where: MemeScalarWhereInput!
+  data: MemeUpdateManyDataInput!
+}
+
+input MemeUpdateWithWhereUniqueNestedInput {
+  where: MemeWhereUniqueInput!
+  data: MemeUpdateDataInput!
+}
+
+input MemeUpsertWithWhereUniqueNestedInput {
+  where: MemeWhereUniqueInput!
+  update: MemeUpdateDataInput!
+  create: MemeCreateInput!
+}
+
+input MemeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  tags: String
+  tags_not: String
+  tags_in: [String!]
+  tags_not_in: [String!]
+  tags_lt: String
+  tags_lte: String
+  tags_gt: String
+  tags_gte: String
+  tags_contains: String
+  tags_not_contains: String
+  tags_starts_with: String
+  tags_not_starts_with: String
+  tags_ends_with: String
+  tags_not_ends_with: String
+  AND: [MemeWhereInput!]
+  OR: [MemeWhereInput!]
+  NOT: [MemeWhereInput!]
+}
+
+input MemeWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
+  createMeme(data: MemeCreateInput!): Meme!
+  updateMeme(data: MemeUpdateInput!, where: MemeWhereUniqueInput!): Meme
+  updateManyMemes(data: MemeUpdateManyMutationInput!, where: MemeWhereInput): BatchPayload!
+  upsertMeme(where: MemeWhereUniqueInput!, create: MemeCreateInput!, update: MemeUpdateInput!): Meme!
+  deleteMeme(where: MemeWhereUniqueInput!): Meme
+  deleteManyMemes(where: MemeWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -40,6 +296,9 @@ type PageInfo {
 }
 
 type Query {
+  meme(where: MemeWhereUniqueInput!): Meme
+  memes(where: MemeWhereInput, orderBy: MemeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meme]!
+  memesConnection(where: MemeWhereInput, orderBy: MemeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MemeConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -47,6 +306,7 @@ type Query {
 }
 
 type Subscription {
+  meme(where: MemeSubscriptionWhereInput): MemeSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -55,6 +315,7 @@ type User {
   name: String!
   password: String!
   email: String!
+  memes(where: MemeWhereInput, orderBy: MemeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meme!]
 }
 
 type UserConnection {
@@ -68,6 +329,7 @@ input UserCreateInput {
   name: String!
   password: String!
   email: String!
+  memes: MemeCreateManyInput
 }
 
 type UserEdge {
@@ -115,6 +377,7 @@ input UserUpdateInput {
   name: String
   password: String
   email: String
+  memes: MemeUpdateManyInput
 }
 
 input UserUpdateManyMutationInput {
@@ -180,6 +443,9 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  memes_every: MemeWhereInput
+  memes_some: MemeWhereInput
+  memes_none: MemeWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
