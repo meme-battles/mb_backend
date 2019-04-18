@@ -14,6 +14,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
+  meme: (where?: MemeWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -36,6 +37,25 @@ export interface Prisma {
    * Queries
    */
 
+  meme: (where: MemeWhereUniqueInput) => MemePromise;
+  memes: (args?: {
+    where?: MemeWhereInput;
+    orderBy?: MemeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Meme>;
+  memesConnection: (args?: {
+    where?: MemeWhereInput;
+    orderBy?: MemeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => MemeConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserPromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -61,6 +81,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createMeme: (data: MemeCreateInput) => MemePromise;
+  updateMeme: (args: {
+    data: MemeUpdateInput;
+    where: MemeWhereUniqueInput;
+  }) => MemePromise;
+  updateManyMemes: (args: {
+    data: MemeUpdateManyMutationInput;
+    where?: MemeWhereInput;
+  }) => BatchPayloadPromise;
+  upsertMeme: (args: {
+    where: MemeWhereUniqueInput;
+    create: MemeCreateInput;
+    update: MemeUpdateInput;
+  }) => MemePromise;
+  deleteMeme: (where: MemeWhereUniqueInput) => MemePromise;
+  deleteManyMemes: (where?: MemeWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -86,6 +122,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  meme: (
+    where?: MemeSubscriptionWhereInput
+  ) => MemeSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -99,6 +138,14 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type MemeOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "link_ASC"
+  | "link_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -110,6 +157,58 @@ export type UserOrderByInput =
   | "email_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type MemeWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface MemeWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  link?: String;
+  link_not?: String;
+  link_in?: String[] | String;
+  link_not_in?: String[] | String;
+  link_lt?: String;
+  link_lte?: String;
+  link_gt?: String;
+  link_gte?: String;
+  link_contains?: String;
+  link_not_contains?: String;
+  link_starts_with?: String;
+  link_not_starts_with?: String;
+  link_ends_with?: String;
+  link_not_ends_with?: String;
+  AND?: MemeWhereInput[] | MemeWhereInput;
+  OR?: MemeWhereInput[] | MemeWhereInput;
+  NOT?: MemeWhereInput[] | MemeWhereInput;
+}
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
@@ -173,9 +272,28 @@ export interface UserWhereInput {
   email_not_starts_with?: String;
   email_ends_with?: String;
   email_not_ends_with?: String;
+  memes_every?: MemeWhereInput;
+  memes_some?: MemeWhereInput;
+  memes_none?: MemeWhereInput;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
+}
+
+export interface MemeCreateInput {
+  id?: ID_Input;
+  name: String;
+  link: String;
+}
+
+export interface MemeUpdateInput {
+  name?: String;
+  link?: String;
+}
+
+export interface MemeUpdateManyMutationInput {
+  name?: String;
+  link?: String;
 }
 
 export interface UserCreateInput {
@@ -183,18 +301,128 @@ export interface UserCreateInput {
   name: String;
   password: String;
   email: String;
+  memes?: MemeCreateManyInput;
+}
+
+export interface MemeCreateManyInput {
+  create?: MemeCreateInput[] | MemeCreateInput;
+  connect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
 }
 
 export interface UserUpdateInput {
   name?: String;
   password?: String;
   email?: String;
+  memes?: MemeUpdateManyInput;
+}
+
+export interface MemeUpdateManyInput {
+  create?: MemeCreateInput[] | MemeCreateInput;
+  update?:
+    | MemeUpdateWithWhereUniqueNestedInput[]
+    | MemeUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | MemeUpsertWithWhereUniqueNestedInput[]
+    | MemeUpsertWithWhereUniqueNestedInput;
+  delete?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  connect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  set?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  disconnect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  deleteMany?: MemeScalarWhereInput[] | MemeScalarWhereInput;
+  updateMany?:
+    | MemeUpdateManyWithWhereNestedInput[]
+    | MemeUpdateManyWithWhereNestedInput;
+}
+
+export interface MemeUpdateWithWhereUniqueNestedInput {
+  where: MemeWhereUniqueInput;
+  data: MemeUpdateDataInput;
+}
+
+export interface MemeUpdateDataInput {
+  name?: String;
+  link?: String;
+}
+
+export interface MemeUpsertWithWhereUniqueNestedInput {
+  where: MemeWhereUniqueInput;
+  update: MemeUpdateDataInput;
+  create: MemeCreateInput;
+}
+
+export interface MemeScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  link?: String;
+  link_not?: String;
+  link_in?: String[] | String;
+  link_not_in?: String[] | String;
+  link_lt?: String;
+  link_lte?: String;
+  link_gt?: String;
+  link_gte?: String;
+  link_contains?: String;
+  link_not_contains?: String;
+  link_starts_with?: String;
+  link_not_starts_with?: String;
+  link_ends_with?: String;
+  link_not_ends_with?: String;
+  AND?: MemeScalarWhereInput[] | MemeScalarWhereInput;
+  OR?: MemeScalarWhereInput[] | MemeScalarWhereInput;
+  NOT?: MemeScalarWhereInput[] | MemeScalarWhereInput;
+}
+
+export interface MemeUpdateManyWithWhereNestedInput {
+  where: MemeScalarWhereInput;
+  data: MemeUpdateManyDataInput;
+}
+
+export interface MemeUpdateManyDataInput {
+  name?: String;
+  link?: String;
 }
 
 export interface UserUpdateManyMutationInput {
   name?: String;
   password?: String;
   email?: String;
+}
+
+export interface MemeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: MemeWhereInput;
+  AND?: MemeSubscriptionWhereInput[] | MemeSubscriptionWhereInput;
+  OR?: MemeSubscriptionWhereInput[] | MemeSubscriptionWhereInput;
+  NOT?: MemeSubscriptionWhereInput[] | MemeSubscriptionWhereInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -212,48 +440,45 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface User {
+export interface Meme {
   id: ID_Output;
   name: String;
-  password: String;
-  email: String;
+  link: String;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface MemePromise extends Promise<Meme>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
+  link: () => Promise<String>;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface MemeSubscription
+  extends Promise<AsyncIterator<Meme>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
+  link: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserConnection {
+export interface MemeConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: MemeEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface MemeConnectionPromise
+  extends Promise<MemeConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<MemeEdge>>() => T;
+  aggregate: <T = AggregateMemePromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface MemeConnectionSubscription
+  extends Promise<AsyncIterator<MemeConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MemeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMemeSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -277,6 +502,101 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface MemeEdge {
+  node: Meme;
+  cursor: String;
+}
+
+export interface MemeEdgePromise extends Promise<MemeEdge>, Fragmentable {
+  node: <T = MemePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MemeEdgeSubscription
+  extends Promise<AsyncIterator<MemeEdge>>,
+    Fragmentable {
+  node: <T = MemeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateMeme {
+  count: Int;
+}
+
+export interface AggregateMemePromise
+  extends Promise<AggregateMeme>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMemeSubscription
+  extends Promise<AsyncIterator<AggregateMeme>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface User {
+  id: ID_Output;
+  name: String;
+  password: String;
+  email: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  email: () => Promise<String>;
+  memes: <T = FragmentableArray<Meme>>(args?: {
+    where?: MemeWhereInput;
+    orderBy?: MemeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  memes: <T = Promise<AsyncIterator<MemeSubscription>>>(args?: {
+    where?: MemeWhereInput;
+    orderBy?: MemeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface UserEdge {
@@ -326,6 +646,53 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface MemeSubscriptionPayload {
+  mutation: MutationType;
+  node: Meme;
+  updatedFields: String[];
+  previousValues: MemePreviousValues;
+}
+
+export interface MemeSubscriptionPayloadPromise
+  extends Promise<MemeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MemePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MemePreviousValuesPromise>() => T;
+}
+
+export interface MemeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MemeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MemeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MemePreviousValuesSubscription>() => T;
+}
+
+export interface MemePreviousValues {
+  id: ID_Output;
+  name: String;
+  link: String;
+}
+
+export interface MemePreviousValuesPromise
+  extends Promise<MemePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  link: () => Promise<String>;
+}
+
+export interface MemePreviousValuesSubscription
+  extends Promise<AsyncIterator<MemePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  link: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -408,6 +775,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Meme",
     embedded: false
   }
 ];

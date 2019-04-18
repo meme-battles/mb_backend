@@ -1,6 +1,13 @@
 type User {
-  id: ID! @id
-  name: String!
-  password: String!
-  email: String! @unique
+	id: ID! @id
+	name: String!
+	password: String!
+	email: String! @unique
+	memes: [Meme!]!
+}
+
+type Meme {
+	id: ID! @id
+	name: String!
+	link: String!
 }
