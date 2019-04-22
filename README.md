@@ -1,9 +1,29 @@
 # Backend
 
-The backend repo
+Welcome to the backend Repo. Perhaps when this file gets long enough, we will
+add an index here.
 
-Not sure yet about getting this backend working on your local machine. However,
-here arre the directions for building this from scratch.
+## Packages
+
+Presently the packages we are using:
+
+-   "bcryptjs": "^2.4.3",
+-   "graphql-yoga": "^1.17.4",
+-   "jsonwebtoken": "^8.5.1",
+-   "prisma-client-lib": "^1.31.1"
+-   "dotenv": "^7.0.0",
+-   "nodemon": "1.18.11",
+-   "prisma": "1.31.1"
+
+## Database creation/deployment
+
+We are using Prisma and SDL to deploy the database.
+
+The database schema is located in `/datamodel.prisma` The Prisma deployment
+information is located in `prisma.yml`
+
+Here are the directions for building the Database deployed to a server from
+scratch:
 
 1. Get an account at (app.prisma.io)[app.prisma.io]
 1. In terminal type:
@@ -33,3 +53,64 @@ here arre the directions for building this from scratch.
 1. To see your graphQL query structure and playground head over to the the HTTP
    address provided after the succefful deploy
 1. Enjoy!
+
+## Server
+
+We are using the graphql-yoga server (so, its basically a node/express server)
+
+You will need the correct .env variables to run a local deploy
+
+1. git clone
+1. navigate into the root folder
+1. yarn init (i think??? -- just get all the packages)
+1. from root run: `yarn nodemon`
+1. navigate to `http://localhost:4000`
+
+Basic work flow is:
+
+`datamodel.prisma` -- is the database definitions
+
+`src/generated/` -- is the actual defined and deployed gql fetchable db
+
+`index.js` -- is the server lay on top of the prisma deploy
+
+`src/schema.graphql` -- is the public/protected rout/schema definitions
+
+`src/auth.js` -- is the authentication/protecting routs layer
+
+`src/resolvers` -- is where all the fun happens
+
+To edit or define a new rout or user action, play close attention to
+`src/generated/index.d.ts`. This is where prisma resolves everything you do
+against what it has created.
+
+## User Stories
+
+#### Account admin:
+
+##### Mutations:
+
+-   As a user I can sign up
+-   As a user I can log in
+-   As a user I can log out
+-   As a user I can change my profile information
+
+##### Querries
+
+-   As a user I can view my profile information
+-   As a user I can see the top ranked users by cumulative meme score
+
+#### Playing the game:
+
+##### Querries
+
+-   As a user I can view my memes
+-   As a user I can randomly see a random meme
+
+##### Mutations
+
+-   As a user I can create a meme
+-   As a user I can delete one of my memes
+-   As a user I can like a meme
+-   As a user I can unlike a meme
+-   As a user I can judge a meme battle
