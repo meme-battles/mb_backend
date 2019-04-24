@@ -1,14 +1,27 @@
 type User {
 	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 	name: String!
 	password: String!
 	email: String! @unique
+	role: Role! @default(value: USER)
 	memes: [Meme!]!
 }
 
 type Meme {
 	id: ID! @id
-	name: String!
-	link: String!
-	tags: String!
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+	postedBy: User!
+	imgLink: String!
+	cumulative: Int! @default(value: 0)
+	votesUp: Int! @default(value: 0)
+	vsBattleWins: Int! @default(value: 0)
+	vsBattleLoses: Int! @default(value: 0)
+}
+
+enum Role {
+	ADMIN
+	USER
 }

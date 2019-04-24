@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 type Query {
   info: String!
   feed: [Link!]!
@@ -12,3 +13,49 @@ type Link {
   description: String!
   url: String!
 }
+=======
+type Query {
+	meme(id: ID!): Meme
+	myMemes: [Meme!]!
+	me: User
+	randomMeme: Meme
+	top10Users: [User!]!
+}
+
+type Mutation {
+	# Admin
+	signup(email: String!, password: String!, name: String!): AuthPayload!
+	login(email: String!, password: String!): AuthPayload!
+	# logout: String
+	updateProfile(name: String, email: String, password: String): User
+	# Manage Memes
+	createMeme(imgLink: String!): Meme!
+	deleteMeme(id: ID!): Meme!
+	# Play
+	likeMeme(id: ID!): Meme!
+	winVsBattle(id: ID!): Meme!
+	loseVsBattle(id: ID!): Meme!
+}
+
+type AuthPayload {
+	token: String!
+	user: User!
+}
+
+type User {
+	id: ID!
+	name: String
+	email: String!
+	memes: [Meme!]!
+}
+
+type Meme {
+	id: ID!
+	postedBy: User!
+	imgLink: String!
+	cumulative: Int!
+	votesUp: Int!
+	vsBattleWins: Int!
+	vsBattleLoses: Int!
+}
+>>>>>>> b2eb92d06e28990eb05ced8672546d6beff26954

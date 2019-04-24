@@ -1,6 +1,7 @@
 endpoint: https://us1.prisma.sh/bondor-e1702b/meme-battle-api/dev
 datamodel: datamodel.prisma
+secret: ${env:PRISMA_DB_SECRET}
 
 generate:
     - generator: javascript-client
-      output: ./generated/prisma-client/
+      output: ./src/generated/prisma-client/
