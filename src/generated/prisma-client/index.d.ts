@@ -176,91 +176,126 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
+export interface MemeUpdateInput {
+  postedBy?: UserUpdateOneRequiredWithoutMemesInput;
+  imgLink?: String;
+  cumulative?: Int;
+  votesUp?: Int;
+  vsBattleWins?: Int;
+  vsBattleLoses?: Int;
+}
+
 export type MemeWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface MemeWhereInput {
+export interface MemeUpdateManyWithoutPostedByInput {
+  create?: MemeCreateWithoutPostedByInput[] | MemeCreateWithoutPostedByInput;
+  delete?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  connect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  set?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  disconnect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
+  update?:
+    | MemeUpdateWithWhereUniqueWithoutPostedByInput[]
+    | MemeUpdateWithWhereUniqueWithoutPostedByInput;
+  upsert?:
+    | MemeUpsertWithWhereUniqueWithoutPostedByInput[]
+    | MemeUpsertWithWhereUniqueWithoutPostedByInput;
+  deleteMany?: MemeScalarWhereInput[] | MemeScalarWhereInput;
+  updateMany?:
+    | MemeUpdateManyWithWhereNestedInput[]
+    | MemeUpdateManyWithWhereNestedInput;
+}
+
+export interface UserCreateInput {
   id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  postedBy?: UserWhereInput;
-  imgLink?: String;
-  imgLink_not?: String;
-  imgLink_in?: String[] | String;
-  imgLink_not_in?: String[] | String;
-  imgLink_lt?: String;
-  imgLink_lte?: String;
-  imgLink_gt?: String;
-  imgLink_gte?: String;
-  imgLink_contains?: String;
-  imgLink_not_contains?: String;
-  imgLink_starts_with?: String;
-  imgLink_not_starts_with?: String;
-  imgLink_ends_with?: String;
-  imgLink_not_ends_with?: String;
+  name: String;
+  password: String;
+  email: String;
+  role?: Role;
+  memes?: MemeCreateManyWithoutPostedByInput;
+}
+
+export interface UserUpdateInput {
+  name?: String;
+  password?: String;
+  email?: String;
+  role?: Role;
+  memes?: MemeUpdateManyWithoutPostedByInput;
+}
+
+export interface UserUpsertWithoutMemesInput {
+  update: UserUpdateWithoutMemesDataInput;
+  create: UserCreateWithoutMemesInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: String;
+  password?: String;
+  email?: String;
+  role?: Role;
+}
+
+export interface MemeCreateInput {
+  id?: ID_Input;
+  postedBy: UserCreateOneWithoutMemesInput;
+  imgLink: String;
   cumulative?: Int;
-  cumulative_not?: Int;
-  cumulative_in?: Int[] | Int;
-  cumulative_not_in?: Int[] | Int;
-  cumulative_lt?: Int;
-  cumulative_lte?: Int;
-  cumulative_gt?: Int;
-  cumulative_gte?: Int;
   votesUp?: Int;
-  votesUp_not?: Int;
-  votesUp_in?: Int[] | Int;
-  votesUp_not_in?: Int[] | Int;
-  votesUp_lt?: Int;
-  votesUp_lte?: Int;
-  votesUp_gt?: Int;
-  votesUp_gte?: Int;
   vsBattleWins?: Int;
-  vsBattleWins_not?: Int;
-  vsBattleWins_in?: Int[] | Int;
-  vsBattleWins_not_in?: Int[] | Int;
-  vsBattleWins_lt?: Int;
-  vsBattleWins_lte?: Int;
-  vsBattleWins_gt?: Int;
-  vsBattleWins_gte?: Int;
   vsBattleLoses?: Int;
-  vsBattleLoses_not?: Int;
-  vsBattleLoses_in?: Int[] | Int;
-  vsBattleLoses_not_in?: Int[] | Int;
-  vsBattleLoses_lt?: Int;
-  vsBattleLoses_lte?: Int;
-  vsBattleLoses_gt?: Int;
-  vsBattleLoses_gte?: Int;
-  AND?: MemeWhereInput[] | MemeWhereInput;
-  OR?: MemeWhereInput[] | MemeWhereInput;
-  NOT?: MemeWhereInput[] | MemeWhereInput;
+}
+
+export interface MemeUpdateManyWithWhereNestedInput {
+  where: MemeScalarWhereInput;
+  data: MemeUpdateManyDataInput;
+}
+
+export interface UserCreateOneWithoutMemesInput {
+  create?: UserCreateWithoutMemesInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface MemeUpsertWithWhereUniqueWithoutPostedByInput {
+  where: MemeWhereUniqueInput;
+  update: MemeUpdateWithoutPostedByDataInput;
+  create: MemeCreateWithoutPostedByInput;
+}
+
+export interface UserCreateWithoutMemesInput {
+  id?: ID_Input;
+  name: String;
+  password: String;
+  email: String;
+  role?: Role;
+}
+
+export interface MemeUpdateWithoutPostedByDataInput {
+  imgLink?: String;
+  cumulative?: Int;
+  votesUp?: Int;
+  vsBattleWins?: Int;
+  vsBattleLoses?: Int;
+}
+
+export interface MemeCreateWithoutPostedByInput {
+  id?: ID_Input;
+  imgLink: String;
+  cumulative?: Int;
+  votesUp?: Int;
+  vsBattleWins?: Int;
+  vsBattleLoses?: Int;
 }
 
 export interface UserWhereInput {
@@ -348,43 +383,6 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface MemeCreateInput {
-  id?: ID_Input;
-  postedBy: UserCreateOneWithoutMemesInput;
-  imgLink: String;
-  cumulative?: Int;
-  votesUp?: Int;
-  vsBattleWins?: Int;
-  vsBattleLoses?: Int;
-}
-
-export interface UserCreateOneWithoutMemesInput {
-  create?: UserCreateWithoutMemesInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateWithoutMemesInput {
-  id?: ID_Input;
-  name: String;
-  password: String;
-  email: String;
-  role?: Role;
-}
-
-export interface MemeUpdateInput {
-  postedBy?: UserUpdateOneRequiredWithoutMemesInput;
-  imgLink?: String;
-  cumulative?: Int;
-  votesUp?: Int;
-  vsBattleWins?: Int;
-  vsBattleLoses?: Int;
-}
-
 export interface UserUpdateOneRequiredWithoutMemesInput {
   create?: UserCreateWithoutMemesInput;
   update?: UserUpdateWithoutMemesDataInput;
@@ -392,16 +390,17 @@ export interface UserUpdateOneRequiredWithoutMemesInput {
   connect?: UserWhereUniqueInput;
 }
 
-export interface UserUpdateWithoutMemesDataInput {
-  name?: String;
-  password?: String;
-  email?: String;
-  role?: Role;
+export interface MemeUpdateManyDataInput {
+  imgLink?: String;
+  cumulative?: Int;
+  votesUp?: Int;
+  vsBattleWins?: Int;
+  vsBattleLoses?: Int;
 }
 
-export interface UserUpsertWithoutMemesInput {
-  update: UserUpdateWithoutMemesDataInput;
-  create: UserCreateWithoutMemesInput;
+export interface MemeCreateManyWithoutPostedByInput {
+  create?: MemeCreateWithoutPostedByInput[] | MemeCreateWithoutPostedByInput;
+  connect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
 }
 
 export interface MemeUpdateManyMutationInput {
@@ -412,72 +411,94 @@ export interface MemeUpdateManyMutationInput {
   vsBattleLoses?: Int;
 }
 
-export interface UserCreateInput {
+export interface MemeWhereInput {
   id?: ID_Input;
-  name: String;
-  password: String;
-  email: String;
-  role?: Role;
-  memes?: MemeCreateManyWithoutPostedByInput;
-}
-
-export interface MemeCreateManyWithoutPostedByInput {
-  create?: MemeCreateWithoutPostedByInput[] | MemeCreateWithoutPostedByInput;
-  connect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
-}
-
-export interface MemeCreateWithoutPostedByInput {
-  id?: ID_Input;
-  imgLink: String;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  postedBy?: UserWhereInput;
+  imgLink?: String;
+  imgLink_not?: String;
+  imgLink_in?: String[] | String;
+  imgLink_not_in?: String[] | String;
+  imgLink_lt?: String;
+  imgLink_lte?: String;
+  imgLink_gt?: String;
+  imgLink_gte?: String;
+  imgLink_contains?: String;
+  imgLink_not_contains?: String;
+  imgLink_starts_with?: String;
+  imgLink_not_starts_with?: String;
+  imgLink_ends_with?: String;
+  imgLink_not_ends_with?: String;
   cumulative?: Int;
+  cumulative_not?: Int;
+  cumulative_in?: Int[] | Int;
+  cumulative_not_in?: Int[] | Int;
+  cumulative_lt?: Int;
+  cumulative_lte?: Int;
+  cumulative_gt?: Int;
+  cumulative_gte?: Int;
   votesUp?: Int;
+  votesUp_not?: Int;
+  votesUp_in?: Int[] | Int;
+  votesUp_not_in?: Int[] | Int;
+  votesUp_lt?: Int;
+  votesUp_lte?: Int;
+  votesUp_gt?: Int;
+  votesUp_gte?: Int;
   vsBattleWins?: Int;
+  vsBattleWins_not?: Int;
+  vsBattleWins_in?: Int[] | Int;
+  vsBattleWins_not_in?: Int[] | Int;
+  vsBattleWins_lt?: Int;
+  vsBattleWins_lte?: Int;
+  vsBattleWins_gt?: Int;
+  vsBattleWins_gte?: Int;
   vsBattleLoses?: Int;
+  vsBattleLoses_not?: Int;
+  vsBattleLoses_in?: Int[] | Int;
+  vsBattleLoses_not_in?: Int[] | Int;
+  vsBattleLoses_lt?: Int;
+  vsBattleLoses_lte?: Int;
+  vsBattleLoses_gt?: Int;
+  vsBattleLoses_gte?: Int;
+  AND?: MemeWhereInput[] | MemeWhereInput;
+  OR?: MemeWhereInput[] | MemeWhereInput;
+  NOT?: MemeWhereInput[] | MemeWhereInput;
 }
 
-export interface UserUpdateInput {
+export interface UserUpdateWithoutMemesDataInput {
   name?: String;
   password?: String;
   email?: String;
   role?: Role;
-  memes?: MemeUpdateManyWithoutPostedByInput;
-}
-
-export interface MemeUpdateManyWithoutPostedByInput {
-  create?: MemeCreateWithoutPostedByInput[] | MemeCreateWithoutPostedByInput;
-  delete?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
-  connect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
-  set?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
-  disconnect?: MemeWhereUniqueInput[] | MemeWhereUniqueInput;
-  update?:
-    | MemeUpdateWithWhereUniqueWithoutPostedByInput[]
-    | MemeUpdateWithWhereUniqueWithoutPostedByInput;
-  upsert?:
-    | MemeUpsertWithWhereUniqueWithoutPostedByInput[]
-    | MemeUpsertWithWhereUniqueWithoutPostedByInput;
-  deleteMany?: MemeScalarWhereInput[] | MemeScalarWhereInput;
-  updateMany?:
-    | MemeUpdateManyWithWhereNestedInput[]
-    | MemeUpdateManyWithWhereNestedInput;
-}
-
-export interface MemeUpdateWithWhereUniqueWithoutPostedByInput {
-  where: MemeWhereUniqueInput;
-  data: MemeUpdateWithoutPostedByDataInput;
-}
-
-export interface MemeUpdateWithoutPostedByDataInput {
-  imgLink?: String;
-  cumulative?: Int;
-  votesUp?: Int;
-  vsBattleWins?: Int;
-  vsBattleLoses?: Int;
-}
-
-export interface MemeUpsertWithWhereUniqueWithoutPostedByInput {
-  where: MemeWhereUniqueInput;
-  update: MemeUpdateWithoutPostedByDataInput;
-  create: MemeCreateWithoutPostedByInput;
 }
 
 export interface MemeScalarWhereInput {
@@ -562,26 +583,6 @@ export interface MemeScalarWhereInput {
   NOT?: MemeScalarWhereInput[] | MemeScalarWhereInput;
 }
 
-export interface MemeUpdateManyWithWhereNestedInput {
-  where: MemeScalarWhereInput;
-  data: MemeUpdateManyDataInput;
-}
-
-export interface MemeUpdateManyDataInput {
-  imgLink?: String;
-  cumulative?: Int;
-  votesUp?: Int;
-  vsBattleWins?: Int;
-  vsBattleLoses?: Int;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: String;
-  password?: String;
-  email?: String;
-  role?: Role;
-}
-
 export interface MemeSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -593,19 +594,126 @@ export interface MemeSubscriptionWhereInput {
   NOT?: MemeSubscriptionWhereInput[] | MemeSubscriptionWhereInput;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+export interface MemeUpdateWithWhereUniqueWithoutPostedByInput {
+  where: MemeWhereUniqueInput;
+  data: MemeUpdateWithoutPostedByDataInput;
 }
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  name: String;
+  password: String;
+  email: String;
+  role: Role;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  email: () => Promise<String>;
+  role: () => Promise<Role>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  role: () => Promise<AsyncIterator<Role>>;
+}
+
+export interface MemeEdge {
+  node: Meme;
+  cursor: String;
+}
+
+export interface MemeEdgePromise extends Promise<MemeEdge>, Fragmentable {
+  node: <T = MemePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MemeEdgeSubscription
+  extends Promise<AsyncIterator<MemeEdge>>,
+    Fragmentable {
+  node: <T = MemeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface MemeSubscriptionPayload {
+  mutation: MutationType;
+  node: Meme;
+  updatedFields: String[];
+  previousValues: MemePreviousValues;
+}
+
+export interface MemeSubscriptionPayloadPromise
+  extends Promise<MemeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MemePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MemePreviousValuesPromise>() => T;
+}
+
+export interface MemeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MemeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MemeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MemePreviousValuesSubscription>() => T;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Meme {
@@ -739,60 +847,6 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface MemeEdge {
-  node: Meme;
-  cursor: String;
-}
-
-export interface MemeEdgePromise extends Promise<MemeEdge>, Fragmentable {
-  node: <T = MemePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface MemeEdgeSubscription
-  extends Promise<AsyncIterator<MemeEdge>>,
-    Fragmentable {
-  node: <T = MemeSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateMeme {
-  count: Int;
-}
-
-export interface AggregateMemePromise
-  extends Promise<AggregateMeme>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateMemeSubscription
-  extends Promise<AsyncIterator<AggregateMeme>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
 export interface UserEdge {
   node: User;
   cursor: String;
@@ -810,61 +864,45 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateMeme {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateMemePromise
+  extends Promise<AggregateMeme>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateMemeSubscription
+  extends Promise<AsyncIterator<AggregateMeme>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface MemeSubscriptionPayload {
-  mutation: MutationType;
-  node: Meme;
-  updatedFields: String[];
-  previousValues: MemePreviousValues;
-}
-
-export interface MemeSubscriptionPayloadPromise
-  extends Promise<MemeSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = MemePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = MemePreviousValuesPromise>() => T;
-}
-
-export interface MemeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<MemeSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = MemeSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = MemePreviousValuesSubscription>() => T;
 }
 
 export interface MemePreviousValues {
@@ -904,70 +942,49 @@ export interface MemePreviousValuesSubscription
   vsBattleLoses: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface UserPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  name: String;
-  password: String;
-  email: String;
-  role: Role;
-}
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  password: () => Promise<String>;
-  email: () => Promise<String>;
-  role: () => Promise<Role>;
-}
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  role: () => Promise<AsyncIterator<Role>>;
-}
+export type Long = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /*
 DateTime scalar input type, allowing Date
@@ -978,23 +995,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-export type Long = string;
 
 /**
  * Model Metadata

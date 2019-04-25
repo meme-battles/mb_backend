@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-{
-  "name": "mb_backend",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "graphql-yoga": "^1.17.4"
-  }
-}
-=======
 {
 	"name": "mb_backend",
 	"version": "1.0.0",
@@ -32,4 +21,3 @@
 		"nodemon": "nodemon"
 	}
 }
->>>>>>> b2eb92d06e28990eb05ced8672546d6beff26954

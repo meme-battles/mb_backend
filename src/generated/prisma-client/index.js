@@ -20,7 +20,7 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/bondor-e1702b/meme-battle-api/dev`,
+  endpoint: `https://imeme-battlr-api-ee2f563b86.herokuapp.com`,
   secret: `${process.env["PRISMA_DB_SECRET"]}`
 });
 exports.prisma = new exports.Prisma();

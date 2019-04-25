@@ -1,4 +1,4 @@
-endpoint: https://us1.prisma.sh/bondor-e1702b/meme-battle-api/dev
+endpoint: https://imeme-battlr-api-ee2f563b86.herokuapp.com
 datamodel: datamodel.prisma
 secret: ${env:PRISMA_DB_SECRET}
 
