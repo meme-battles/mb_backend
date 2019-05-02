@@ -2,8 +2,15 @@ function postedBy(parent, args, context) {
 	return context.prisma.meme({id: parent.id}).postedBy();
 }
 
+function likedBy(parent, args, ctx) {
+
+	return ctx.prisma.meme({id: parent.id}).likedBy();
+
+}
+
 module.exports = {
-	postedBy
+	postedBy,
+	likedBy
 };
 
 //this is resolving any nested query between users and memes.

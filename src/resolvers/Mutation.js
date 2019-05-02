@@ -54,9 +54,14 @@ const deleteMeme = async (parent, args, context, info) => {
 
 const likeMeme = async (parent, args, context, info) => {
 	const meme = await context.prisma.meme({id: args.id});
+	const userID = getUserId(context);
 	return await context.prisma.updateMeme({
 		where: {id: args.id},
-		data: {votesUp: meme.votesUp + 1, cumulative: meme.cumulative + 1}
+		data: {votesUp: meme.votesUp + 1, cumulative: meme.cumulative + 1, likedBy: {
+			connect: {
+				id: userID
+			}
+		}},
 	});
 };
 

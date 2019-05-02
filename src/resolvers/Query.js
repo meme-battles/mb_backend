@@ -15,8 +15,34 @@ const myMemes = async (parent, args, context, info) => {
 };
 
 const randomMeme = async (parent, args, context, info) => {
-	const memes = await context.prisma.memes();
-	return memes[Math.floor(Math.random() * memes.length)];
+	const id = getUserId(context);
+
+	let count = args.count;
+
+	if (!count)
+		count = 1;
+
+	const memes = await context.prisma.memes({
+		where: {
+			likedBy_none: {
+				id
+			}
+		}
+	});
+
+	/*
+
+		Best way to do this would be with this SQL query, but idk how to do this with prisma
+
+		SELECT * FROM Memes
+		ORDER BY RANDOM()
+		LIMIT 10
+
+	*/
+
+	const index = Math.random() * memes.length;
+
+	return memes.slice(index - count, count);
 };
 
 const top10Users = async (parent, args, context, info) => {

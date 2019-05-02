@@ -2,7 +2,7 @@ type Query {
 	meme(id: ID!): Meme
 	myMemes: [Meme!]!
 	me: User
-	randomMeme: Meme
+	randomMeme(count: Int): [Meme]
 	top10Users: [User!]!
 }
 
@@ -36,6 +36,7 @@ type User {
 type Meme {
 	id: ID!
 	postedBy: User!
+	likedBy: [User!]!
 	imgLink: String!
 	cumulative: Int!
 	votesUp: Int!
