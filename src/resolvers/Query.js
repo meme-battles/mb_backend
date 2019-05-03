@@ -25,7 +25,11 @@ const randomMeme = async (parent, args, context, info) => {
 
 	const memes = await db.query(`
 
-		SELECT * FROM "default$default"."Meme"
+		SELECT m.id, m."imgLink", m.cumulative, m."votesUp", m."vsBattleWins", m."vsBattleLoses", l."A" as liked_by FROM "default$default"."Meme" AS m
+		INNER JOIN "default$default"."_LikedMemes" AS l
+		ON m.id = l."A"
+		WHERE l."A" != '${id}'
+		GROUP BY m.id, liked_by
 		ORDER BY RANDOM()
 		LIMIT ${count}
 
