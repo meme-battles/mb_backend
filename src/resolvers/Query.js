@@ -1,4 +1,5 @@
 const {getUserId} = require('../auth');
+const db = require('../db');
 
 const me = async (parent, args, context, info) => {
 	const id = getUserId(context);
@@ -22,27 +23,28 @@ const randomMeme = async (parent, args, context, info) => {
 	if (!count)
 		count = 1;
 
-	const memes = await context.prisma.memes({
-		where: {
-			likedBy_none: {
-				id
-			}
-		}
-	});
+	const memes = await db.query(`
 
-	/*
-
-		Best way to do this would be with this SQL query, but idk how to do this with prisma
-
-		SELECT * FROM Memes
+		SELECT * FROM "default$default"."Meme"
 		ORDER BY RANDOM()
-		LIMIT 10
+		LIMIT ${count}
 
-	*/
+	`);
 
-	const index = Math.random() * memes.length;
+	return memes.rows;
 
-	return memes.slice(index - count, count);
+	// const memes = await context.prisma.memes({
+	// 	where: {
+	// 		likedBy_none: {
+	// 			id
+	// 		}
+	// 	}
+	// });
+	//
+	// const index = Math.random() * memes.length;
+	//
+	// return memes.slice(index - count, count);
+
 };
 
 const top10Users = async (parent, args, context, info) => {

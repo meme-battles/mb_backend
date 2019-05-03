@@ -39,19 +39,13 @@ type MemeConnection {
 }
 
 input MemeCreateInput {
-  id: ID
   postedBy: UserCreateOneWithoutMemesInput!
-  likedBy: UserCreateManyWithoutLikedMemesInput
+  likedBy: UserCreateManyInput
   imgLink: String!
   cumulative: Int
   votesUp: Int
   vsBattleWins: Int
   vsBattleLoses: Int
-}
-
-input MemeCreateManyWithoutLikedByInput {
-  create: [MemeCreateWithoutLikedByInput!]
-  connect: [MemeWhereUniqueInput!]
 }
 
 input MemeCreateManyWithoutPostedByInput {
@@ -59,19 +53,8 @@ input MemeCreateManyWithoutPostedByInput {
   connect: [MemeWhereUniqueInput!]
 }
 
-input MemeCreateWithoutLikedByInput {
-  id: ID
-  postedBy: UserCreateOneWithoutMemesInput!
-  imgLink: String!
-  cumulative: Int
-  votesUp: Int
-  vsBattleWins: Int
-  vsBattleLoses: Int
-}
-
 input MemeCreateWithoutPostedByInput {
-  id: ID
-  likedBy: UserCreateManyWithoutLikedMemesInput
+  likedBy: UserCreateManyInput
   imgLink: String!
   cumulative: Int
   votesUp: Int
@@ -216,7 +199,7 @@ input MemeSubscriptionWhereInput {
 
 input MemeUpdateInput {
   postedBy: UserUpdateOneRequiredWithoutMemesInput
-  likedBy: UserUpdateManyWithoutLikedMemesInput
+  likedBy: UserUpdateManyInput
   imgLink: String
   cumulative: Int
   votesUp: Int
@@ -240,18 +223,6 @@ input MemeUpdateManyMutationInput {
   vsBattleLoses: Int
 }
 
-input MemeUpdateManyWithoutLikedByInput {
-  create: [MemeCreateWithoutLikedByInput!]
-  delete: [MemeWhereUniqueInput!]
-  connect: [MemeWhereUniqueInput!]
-  set: [MemeWhereUniqueInput!]
-  disconnect: [MemeWhereUniqueInput!]
-  update: [MemeUpdateWithWhereUniqueWithoutLikedByInput!]
-  upsert: [MemeUpsertWithWhereUniqueWithoutLikedByInput!]
-  deleteMany: [MemeScalarWhereInput!]
-  updateMany: [MemeUpdateManyWithWhereNestedInput!]
-}
-
 input MemeUpdateManyWithoutPostedByInput {
   create: [MemeCreateWithoutPostedByInput!]
   delete: [MemeWhereUniqueInput!]
@@ -269,38 +240,18 @@ input MemeUpdateManyWithWhereNestedInput {
   data: MemeUpdateManyDataInput!
 }
 
-input MemeUpdateWithoutLikedByDataInput {
-  postedBy: UserUpdateOneRequiredWithoutMemesInput
-  imgLink: String
-  cumulative: Int
-  votesUp: Int
-  vsBattleWins: Int
-  vsBattleLoses: Int
-}
-
 input MemeUpdateWithoutPostedByDataInput {
-  likedBy: UserUpdateManyWithoutLikedMemesInput
+  likedBy: UserUpdateManyInput
   imgLink: String
   cumulative: Int
   votesUp: Int
   vsBattleWins: Int
   vsBattleLoses: Int
-}
-
-input MemeUpdateWithWhereUniqueWithoutLikedByInput {
-  where: MemeWhereUniqueInput!
-  data: MemeUpdateWithoutLikedByDataInput!
 }
 
 input MemeUpdateWithWhereUniqueWithoutPostedByInput {
   where: MemeWhereUniqueInput!
   data: MemeUpdateWithoutPostedByDataInput!
-}
-
-input MemeUpsertWithWhereUniqueWithoutLikedByInput {
-  where: MemeWhereUniqueInput!
-  update: MemeUpdateWithoutLikedByDataInput!
-  create: MemeCreateWithoutLikedByInput!
 }
 
 input MemeUpsertWithWhereUniqueWithoutPostedByInput {
@@ -460,7 +411,6 @@ type User {
   email: String!
   role: Role!
   memes(where: MemeWhereInput, orderBy: MemeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meme!]
-  likedMemes(where: MemeWhereInput, orderBy: MemeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Meme!]
 }
 
 type UserConnection {
@@ -470,17 +420,15 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  id: ID
   name: String!
   password: String!
   email: String!
   role: Role
   memes: MemeCreateManyWithoutPostedByInput
-  likedMemes: MemeCreateManyWithoutLikedByInput
 }
 
-input UserCreateManyWithoutLikedMemesInput {
-  create: [UserCreateWithoutLikedMemesInput!]
+input UserCreateManyInput {
+  create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -489,22 +437,11 @@ input UserCreateOneWithoutMemesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutLikedMemesInput {
-  id: ID
-  name: String!
-  password: String!
-  email: String!
-  role: Role
-  memes: MemeCreateManyWithoutPostedByInput
-}
-
 input UserCreateWithoutMemesInput {
-  id: ID
   name: String!
   password: String!
   email: String!
   role: Role
-  likedMemes: MemeCreateManyWithoutLikedByInput
 }
 
 type UserEdge {
@@ -639,13 +576,20 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  name: String
+  password: String
+  email: String
+  role: Role
+  memes: MemeUpdateManyWithoutPostedByInput
+}
+
 input UserUpdateInput {
   name: String
   password: String
   email: String
   role: Role
   memes: MemeUpdateManyWithoutPostedByInput
-  likedMemes: MemeUpdateManyWithoutLikedByInput
 }
 
 input UserUpdateManyDataInput {
@@ -655,23 +599,23 @@ input UserUpdateManyDataInput {
   role: Role
 }
 
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
 input UserUpdateManyMutationInput {
   name: String
   password: String
   email: String
   role: Role
-}
-
-input UserUpdateManyWithoutLikedMemesInput {
-  create: [UserCreateWithoutLikedMemesInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutLikedMemesInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutLikedMemesInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithWhereNestedInput {
@@ -686,25 +630,16 @@ input UserUpdateOneRequiredWithoutMemesInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutLikedMemesDataInput {
-  name: String
-  password: String
-  email: String
-  role: Role
-  memes: MemeUpdateManyWithoutPostedByInput
-}
-
 input UserUpdateWithoutMemesDataInput {
   name: String
   password: String
   email: String
   role: Role
-  likedMemes: MemeUpdateManyWithoutLikedByInput
 }
 
-input UserUpdateWithWhereUniqueWithoutLikedMemesInput {
+input UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutLikedMemesDataInput!
+  data: UserUpdateDataInput!
 }
 
 input UserUpsertWithoutMemesInput {
@@ -712,10 +647,10 @@ input UserUpsertWithoutMemesInput {
   create: UserCreateWithoutMemesInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutLikedMemesInput {
+input UserUpsertWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutLikedMemesDataInput!
-  create: UserCreateWithoutLikedMemesInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -798,9 +733,6 @@ input UserWhereInput {
   memes_every: MemeWhereInput
   memes_some: MemeWhereInput
   memes_none: MemeWhereInput
-  likedMemes_every: MemeWhereInput
-  likedMemes_some: MemeWhereInput
-  likedMemes_none: MemeWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

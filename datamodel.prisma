@@ -1,5 +1,5 @@
 type User {
-	id: ID! @id
+	id: ID! @unique
 	createdAt: DateTime! @createdAt
 	updatedAt: DateTime! @updatedAt
 	name: String!
@@ -10,7 +10,7 @@ type User {
 }
 
 type Meme {
-	id: ID! @id
+	id: ID! @unique
 	createdAt: DateTime! @createdAt
 	updatedAt: DateTime! @updatedAt
 	postedBy: User! @relation(name: "PostedBy")
