@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const {getUserId} = require('../auth');
 
 const tokenExpiresIn = '100h';
-const service = 'therealmemeserver-dev';
+const service = 'mb_backend-dev';
 
 const signup = async (parent, args, context, info) => {
 	console.log('some shizz be happenin');
