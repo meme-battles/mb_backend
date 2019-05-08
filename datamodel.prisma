@@ -1,19 +1,20 @@
 type User {
-	id: ID! @id
+	id: ID! @unique
 	createdAt: DateTime! @createdAt
 	updatedAt: DateTime! @updatedAt
 	name: String!
 	password: String!
 	email: String! @unique
 	role: Role! @default(value: USER)
-	memes: [Meme!]!
+	memes: [Meme!]! @relation(name: "PostedBy")
 }
 
 type Meme {
-	id: ID! @id
+	id: ID! @unique
 	createdAt: DateTime! @createdAt
 	updatedAt: DateTime! @updatedAt
-	postedBy: User!
+	postedBy: User! @relation(name: "PostedBy")
+	likedBy: [User!]! @relation(name: "LikedMemes")
 	imgLink: String!
 	cumulative: Int! @default(value: 0)
 	votesUp: Int! @default(value: 0)

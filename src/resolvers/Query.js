@@ -1,4 +1,5 @@
 const {getUserId} = require('../auth');
+const db = require('../db');
 
 const me = async (parent, args, context, info) => {
 	const id = getUserId(context);
@@ -15,8 +16,48 @@ const myMemes = async (parent, args, context, info) => {
 };
 
 const randomMeme = async (parent, args, context, info) => {
-	const memes = await context.prisma.memes();
-	return memes[Math.floor(Math.random() * memes.length)];
+	const id = getUserId(context);
+
+	let count = args.count;
+
+	if (!count)
+		count = 1;
+
+	const memes = await db.query(`
+
+		SELECT * FROM
+		(
+			SELECT m.* FROM "mb_backend$dev"."Meme" as m
+			LEFT JOIN "mb_backend$dev"."_LikedMemes" as l
+			ON l."A" = m.id
+			WHERE l."B" != '${id}'
+			EXCEPT
+			(
+				SELECT m.* FROM "mb_backend$dev"."Meme" as m
+				LEFT JOIN "mb_backend$dev"."_LikedMemes" as l
+				ON l."A" = m.id
+				WHERE l."B" = '${id}'
+			)
+		) as result
+		ORDER BY RANDOM()
+		LIMIT ${count}
+
+	`);
+
+	return memes.rows;
+
+	// const memes = await context.prisma.memes({
+	// 	where: {
+	// 		likedBy_none: {
+	// 			id
+	// 		}
+	// 	}
+	// });
+	//
+	// const index = Math.random() * memes.length;
+	//
+	// return memes.slice(index - count, count);
+
 };
 
 const top10Users = async (parent, args, context, info) => {

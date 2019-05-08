@@ -3,16 +3,20 @@ const jwt = require('jsonwebtoken');
 const {getUserId} = require('../auth');
 
 const tokenExpiresIn = '100h';
-const service = 'meme-battlr-dev';
+const service = 'mb_backend-dev';
 
 const signup = async (parent, args, context, info) => {
+	console.log('some shizz be happenin');
 	if (!/^(?=.*\d).{8,}$/.test(args.password))
 		throw new Error('\nPassword must be 8 char w/ at least 1 num!\n');
 	const password = await bcrypt.hash(args.password, 10);
+	console.log('password good');
 	const user = await context.prisma.createUser({...args, password});
+	console.log('we created a user yo');
 	const token = jwt.sign({userId: user.id, service}, process.env.APP_SECRET, {
 		expiresIn: tokenExpiresIn
 	});
+	console.log('we should be good');
 	return {token, user};
 };
 
@@ -40,7 +44,12 @@ const createMeme = async (parent, args, context, info) => {
 	const userId = getUserId(context);
 	return await context.prisma.createMeme({
 		...args,
-		postedBy: {connect: {id: userId}}
+		postedBy: {connect: {id: userId}},
+		likedBy: {
+			connect: {
+				id: userId
+			}
+		}
 	});
 };
 
@@ -54,9 +63,14 @@ const deleteMeme = async (parent, args, context, info) => {
 
 const likeMeme = async (parent, args, context, info) => {
 	const meme = await context.prisma.meme({id: args.id});
+	const userID = getUserId(context);
 	return await context.prisma.updateMeme({
 		where: {id: args.id},
-		data: {votesUp: meme.votesUp + 1, cumulative: meme.cumulative + 1}
+		data: {votesUp: meme.votesUp + 1, cumulative: meme.cumulative + 1, likedBy: {
+			connect: {
+				id: userID
+			}
+		}},
 	});
 };
 
