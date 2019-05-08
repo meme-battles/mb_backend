@@ -44,7 +44,12 @@ const createMeme = async (parent, args, context, info) => {
 	const userId = getUserId(context);
 	return await context.prisma.createMeme({
 		...args,
-		postedBy: {connect: {id: userId}}
+		postedBy: {connect: {id: userId}},
+		likedBy: {
+			connect: {
+				id: userId
+			}
+		}
 	});
 };
 
